@@ -1,0 +1,2 @@
+# MediaMagic
+C++ Media Framework
