@@ -1,4 +1,4 @@
-# MediaMagic
+# CppStarter
 C++ Project Starter
 
 # Build
