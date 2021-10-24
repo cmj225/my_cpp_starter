@@ -93,29 +93,23 @@ install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}
 
 # ---- handling custom targets ----
 ## clang-format custom target
+## @NOTE: Set proper paths and files ... temporally project's all cxx files add
 if (${PROJECT_NAME}_ENABLE_CLANG_FORMAT)
-	file(GLOB_RECURSE clang-format-h   CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/*.h")
-	file(GLOB_RECURSE clang-format-hpp CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/*.hpp")
-	file(GLOB_RECURSE clang-format-cc  CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/*.cc")
-	file(GLOB_RECURSE clang-format-cpp CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/*.cpp")
-	file(GLOB_RECURSE clang-format-tpp CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/*.tpp")
-	set(CLANG_FORMAT_INPUT
-		${clang-format-h} ${clang-format-hpp}
-		${clang-format-cc} ${clang-format-cpp} ${clang-format-tpp}
+	file(GLOB_RECURSE clang-format-cxx-files
+		CONFIGURE_DEPENDS
+		"${CMAKE_CURRENT_LIST_DIR}/*.h"
+		"${CMAKE_CURRENT_LIST_DIR}/*.hpp"
+		"${CMAKE_CURRENT_LIST_DIR}/*.cc"
+		"${CMAKE_CURRENT_LIST_DIR}/*.cpp"
+		"${CMAKE_CURRENT_LIST_DIR}/*.tpp"
 	)
+	set(CLANG_FORMAT_INPUT ${clang-format-cxx-files})
 	add_clang_format_target()
 endif()
-
-## @TODO: install documentation to ${PROJECT_LIST_DIR}/doc/pages for GitHub page deploy
-#if (${PROJECT_NAME}_ENABLE_DOXYGEN)
-#	message("Building Documents. :)")
-#	add_subdirectory(doc)
-#endif()
 
 if (${PROJECT_NAME}_ENABLE_UNIT_TESTING)
 	enable_testing()
 	message("Building Tests. :)")
 	add_subdirectory(tests)
 endif()
-
 
