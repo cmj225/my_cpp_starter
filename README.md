@@ -17,3 +17,6 @@ cmake --build build --target clang-format
 # doxygen
 - dependencies
 	- doxygen, graphviz
+- cmake --build build --target doxygen
+- mv html docs
+
