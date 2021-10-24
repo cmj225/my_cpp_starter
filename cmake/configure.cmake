@@ -18,6 +18,13 @@ if (${PROJECT_NAME}_ENABLE_GIT_HOOKS)
 	)
 endif()
 
+if (${PROJECT_NAME}_ENABLE_GIT_SUBMODULES)
+	execute_process(COMMAND git submodule init
+									COMMAND git submodule update
+									WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
+	)
+endif()
+
 if (${PROJECT_NAME}_ENABLE_CLANG_FORMAT)
 	include(cmake/clang-format.cmake)
 endif()

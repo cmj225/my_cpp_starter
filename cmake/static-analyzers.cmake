@@ -3,7 +3,7 @@
 #
 
 # ---- check selected linter option valid ----
-if (${PROJECT_NAME}_ENABLE_STATICAL_ANALYZER)
+if (${PROJECT_NAME}_ENABLE_STATIC_ANALYZER)
 	if (${PROJECT_NAME}_ENABLE_CLANG_TIDY AND ${PROJECT_NAME}_ENABLE_CPPCHECK)
 		message(FATAL_ERROR "Linter must be selected one!, Too Many Linter is selected ...")
   elseif(NOT ${PROJECT_NAME}_ENABLE_CLANG_TIDY OR NOT ${PROJECT_NAME}_ENABLE_CPPCHECK)

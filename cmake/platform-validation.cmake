@@ -5,8 +5,10 @@
 # ---- check platform ----
 if (UNIX AND NOT APPLE)
 	message(STATUS "Platform: Linux")
+	include(GNUInstallDirs)
 elseif (APPLE)
 	message(STATUS "Platform: Mac")
+	include(GNUInstallDirs)
 elseif (WIN32)
 	message(STATUS "Not Supported Platform")
 elseif (APPLE)

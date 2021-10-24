@@ -27,13 +27,15 @@ option(${PROJECT_NAME}_WARNINGS_AS_ERRORS       "Treat compiler warnings as erro
 
 ## git
 option(${PROJECT_NAME}_ENABLE_GIT_HOOKS        "Enable git hooks ${PROJECT_SOURCE_DIR}/hooks" ON)
-option(${PROJECT_NAME}_ENABLE_SUBMODULES       "Enable submodules init & update automatically" OFF)
+## @NOTE: if this option Enabled, submodule updated when project generating ...
+option(${PROJECT_NAME}_ENABLE_GIT_SUBMODULES   "Enable submodules init & update automatically" ON)
 
 ## Clang-format
 option(${PROJECT_NAME}_ENABLE_CLANG_FORMAT      "Enable clang-format for check convention" ON)
 
 ## Statical Analyzers
-option(${PROJECT_NAME}_ENABLE_STATICAL_ANALYZER	"Enable Static Analysis." OFF)
+## @TODO: module setup and testing need ...
+option(${PROJECT_NAME}_ENABLE_STATIC_ANALYZER	"Enable Static Analysis." OFF)
 option(${PROJECT_NAME}_ENABLE_CLANG_TIDY        "Enable Static Analysis with Clang-Tidy." OFF)
 option(${PROJECT_NAME}_ENABLE_CPPCHECK          "Enable Static Analysis with Cppcheck." OFF)
 
@@ -47,7 +49,7 @@ option(${PROJECT_NAME}_USE_GOOGLE_MOCK 	        "Use the GoogleMock for extendin
 option(${PROJECT_NAME}_USE_CATCH2 			        "Use the Catch2 for creating unit tests." OFF) 
 
 include(cmake/configure.cmake)
-message(STATUS "configuring project ended")
+
 # ---- Find project dependencies ----
 ## Identify and link with the specific "packages" the project uses
 ## find_package(package_name package_version REQUIRED package_type [other_options])
@@ -80,17 +82,17 @@ target_link_libraries(${PROJECT_NAME}
 	PUBLIC
 	PRIVATE
 )
-install(
-	TARGETS ${PROJECT_NAME}
-	EXPORT ${PROJECT_NAME}Targets
+install(TARGETS	${PROJECT_NAME}
 	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 	RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-	INCLUDES DESTINATION include
-	PUBLIC_HEADER DESTINATION include
+)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}
+	DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
-# ---- hanlding sub components ----
+# ---- handling custom targets ----
+## clang-format custom target
 if (${PROJECT_NAME}_ENABLE_CLANG_FORMAT)
 	file(GLOB_RECURSE clang-format-h   CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/*.h")
 	file(GLOB_RECURSE clang-format-hpp CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/*.hpp")
@@ -104,15 +106,16 @@ if (${PROJECT_NAME}_ENABLE_CLANG_FORMAT)
 	add_clang_format_target()
 endif()
 
+## @TODO: install documentation to ${PROJECT_LIST_DIR}/doc/pages for GitHub page deploy
+if (${PROJECT_NAME}_ENABLE_DOXYGEN)
+	message("Building Documents. :)")
+	add_subdirectory(doc)
+endif()
+
 if (${PROJECT_NAME}_ENABLE_UNIT_TESTING)
 	enable_testing()
 	message("Building Tests. :)")
 	add_subdirectory(tests)
 endif()
 
-## @TODO: install documentation to ${PROJECT_LIST_DIR}/doc/pages for GitHub page deploy
-if (${PROJECT_NAME}_ENABLE_DOXYGEN)
-	message("Building Documents. :)")
-	add_subdirectory(doc)
-endif()
 
