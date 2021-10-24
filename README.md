@@ -12,5 +12,4 @@ cmake --build build --target clang-format
 # git hooks
 - add hook to ${PROJECT_SOURCE_DIR}/hooks}
 - some hooks pre-installed.
---pre-commit: clang-format foramtting
-
+  - pre-commit: clang-format foramtting
