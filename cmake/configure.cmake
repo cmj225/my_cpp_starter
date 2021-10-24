@@ -33,7 +33,7 @@ if (${PROJECT_NAME}_ENABLE_STATIC_ANALYZER)
 	include(cmake/static-analyzer.cmake)
 endif()
 
-if (${PROJECT_NAME}_ENABLE_DOXEYGEN)
+if (${PROJECT_NAME}_ENABLE_DOXYGEN)
 	include(cmake/documentation.cmake)
 endif()
 

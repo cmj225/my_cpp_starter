@@ -13,3 +13,7 @@ cmake --build build --target clang-format
 - add hook to ${PROJECT_SOURCE_DIR}/hooks}
 - some hooks pre-installed.
   - pre-commit: clang-format foramtting
+
+# doxygen
+- dependencies
+	- doxygen, graphviz

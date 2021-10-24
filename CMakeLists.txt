@@ -12,7 +12,6 @@ configure_file(
 )
 message(STATUS "Started CMake for ${PROJECT_NAME} v${PROJECT_VERSION}...\n")
 
-
 # ---- check default ----
 include(cmake/out-of-source-build.cmake)
 include(cmake/platform-validation.cmake)
@@ -35,14 +34,15 @@ option(${PROJECT_NAME}_ENABLE_CLANG_FORMAT      "Enable clang-format for check c
 
 ## Statical Analyzers
 ## @TODO: module setup and testing need ...
-option(${PROJECT_NAME}_ENABLE_STATIC_ANALYZER	"Enable Static Analysis." OFF)
+option(${PROJECT_NAME}_ENABLE_STATIC_ANALYZER	  "Enable Static Analysis." OFF)
 option(${PROJECT_NAME}_ENABLE_CLANG_TIDY        "Enable Static Analysis with Clang-Tidy." OFF)
 option(${PROJECT_NAME}_ENABLE_CPPCHECK          "Enable Static Analysis with Cppcheck." OFF)
 
 ## Documentation
-option(${PROJECT_NAME}_ENABLE_DOXYGEN           "Enable Doxygen documentation." OFF)
+option(${PROJECT_NAME}_ENABLE_DOXYGEN           "Enable Doxygen documentation." ON)
 
 ## Unit Testing
+## @TODO: module setup and testing need ...
 option(${PROJECT_NAME}_ENABLE_UNIT_TEST         "Enable Unit Tests for the project (from the `test` subforler)." OFF)
 option(${PROJECT_NAME}_USE_GTEST 				        "Use the GoogleTest for creating unit tests." OFF)
 option(${PROJECT_NAME}_USE_GOOGLE_MOCK 	        "Use the GoogleMock for extending the unit tests." OFF)
@@ -107,10 +107,10 @@ if (${PROJECT_NAME}_ENABLE_CLANG_FORMAT)
 endif()
 
 ## @TODO: install documentation to ${PROJECT_LIST_DIR}/doc/pages for GitHub page deploy
-if (${PROJECT_NAME}_ENABLE_DOXYGEN)
-	message("Building Documents. :)")
-	add_subdirectory(doc)
-endif()
+#if (${PROJECT_NAME}_ENABLE_DOXYGEN)
+#	message("Building Documents. :)")
+#	add_subdirectory(doc)
+#endif()
 
 if (${PROJECT_NAME}_ENABLE_UNIT_TESTING)
 	enable_testing()
