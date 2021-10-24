@@ -102,8 +102,10 @@ endif()
 
 # ---- Enable CCache ----
 if (${PROJECT_NAME}_ENABLE_CCACHE)
+	message(STATUS "try to find ccache")
 	find_program(CCACHE_FOUND ccache)
 	if (CCACHE_FOUND)
+		message(STATUS "find ccache!!")
 		set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
 		set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
 	endif()

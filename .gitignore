@@ -1,8 +1,5 @@
 # cmake
 build
-builds
-_build
-_builds
 
 # version file
 include/Greeter/Version.h

@@ -10,15 +10,27 @@ else()
 	set(CMAKE_VERBOSE_MAKEFILE false)
 endif()
 
-# --- make version info to header file
-set(${PROJECT_NAME}_VERSION       	${PROJECT_VERSION})
-set(${PROJECT_NAME}_VERSION_MAJOR 	${PROJECT_VERSION_MAJOR})
-set(${PROJECT_NAME}_VERSION_MINOR 	${PROJECT_VERSION_MINOR})
-set(${PROJECT_NAME}_VERSION_PATCH 	${PROJECT_VERSION_PATCH})
+include(cmake/compiler.cmake) # option: build type, warnings as errers, compile flags
 
-set(${PROJECT_NAME}_BUILD_TYPE    	${CMAKE_BUILD_TYPE})
-set(${PROJECT_NAME}_TARGET_ARCH   	${CMAKE_SYSTEM_PROCESSOR})
-set(${PROJECT_NAME}_TARGET_OS     	${CMAKE_SYSTEM})
-set(${PROJECT_NAME}_TARGET_NAME   	${CMAKE_SYSTEM_NAME})
-set(${PROJECT_NAME}_TARGET_VERSION	${CMAKE_SYSTEM_VERSION})
+if (${PROJECT_NAME}_ENABLE_GIT_HOOKS)
+	execute_process(COMMAND git config core.hooksPath hooks
+									WORKING_DIRECTORY "${PROEJCT_SOURCE_DIR}"
+	)
+endif()
+
+if (${PROJECT_NAME}_ENABLE_CLANG_FORMAT)
+	include(cmake/clang-format.cmake)
+endif()
+
+if (${PROJECT_NAME}_ENABLE_STATIC_ANALYZER)
+	include(cmake/static-analyzer.cmake)
+endif()
+
+if (${PROJECT_NAME}_ENABLE_DOXEYGEN)
+	include(cmake/documentation.cmake)
+endif()
+
+if (${PROJECT_NAME}_ENABLE_UNIT_TEST)
+	include(cmake/unit-test.cmake)
+endif()
 
