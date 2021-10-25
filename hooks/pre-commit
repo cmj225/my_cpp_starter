@@ -19,7 +19,7 @@ fi
 CMAKE_FILES=$(git diff --cached --name-only | grep -e CMakeLists.txt -e *cmake)
 if [ "${CMAKE_FILES}" != "" ]
 then
-	${CMAKE_FORMAT} -i ${CMAKE_FILES} --check | (nchanged=${nChanged} + $?)
+	${CMAKE_FORMAT} --check -i ${CMAKE_FILES} | (nchanged=${nChanged} + $?)
 	echo -n "${nChanged} files changed\n"
 fi
 
