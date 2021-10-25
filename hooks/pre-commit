@@ -19,9 +19,8 @@ fi
 CMAKE_FILES=$(git diff --cached --name-only | grep -e CMakeLists.txt -e *cmake)
 if [ "${CMAKE_FILES}" != "" ]
 then
-	${CMAKE_FORMAT} -i ${CMAKE_FILES}
-	nChanged=$(expr ${nChanged} = $?)
-	echo("${nChanged} files changed")
+	${CMAKE_FORMAT} -i ${CMAKE_FILES} --check | (nchanged=${nChanged} + $?)
+	echo -n "${nChanged} files changed\n"
 fi
 
 # ---- clang-format ----
@@ -37,7 +36,7 @@ if [ "${CXX_FILES}" != "" ]
 then
 	$CLANG_FORMAT -i -style=file ${CXX_FILES}
 	nChanged=$(expr ${nChanged} = $?)
-	echo("${nChanged} files changed")
+	echo -n "${nChanged} files changed\n"
 fi
 
 # bool flag
