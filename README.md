@@ -6,6 +6,12 @@ cmake -S . -B build
 cmake --build build
 cmake --build build --target install
 
+# cmake-format
+install pip
+pip install cmakelang
+pip install pyyaml
+find . \( -name '*.cmake' -o -name 'CMakeLists.txt' \) -exec cmake-format -i {} \;
+
 # clang-format custom target
 cmake --build build --target clang-format
 
