@@ -39,9 +39,10 @@ then
 fi
 
 # bool flag
-if [ "${bFormatted}" = "true" ]
-then
+if [ "${bFormatted}" = "true" ] then
 	echo "some file formatted"
 	exit 1
+else
+	echo "??"
 fi
 
