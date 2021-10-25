@@ -7,7 +7,7 @@ RED="\e[0;31m"
 END="\e[0m"
 
 # boolean flag
-bFormatted="false"
+nChanged=0
 
 # ---- cmake-format ----
 CMAKE_FORMAT=`which cmake-format`
@@ -16,11 +16,12 @@ then
 	echo -n "${RED} Can't find cmake-format ${END}.\n"
 	exit 1
 fi
-find . \( -name '*.cmake' -o -name 'CMakeLists.txt' \) -exec cmake-format -i {} \;
-CMAKE_CHANGED_FILES=$(git diff --cached --name-only | grep -e CMakeLists.txt -e *cmake)
-if [ "${CMAKE_CHANGED_FILES}" != "" ]
+CMAKE_FILES=$(git diff --cached --name-only | grep -e CMakeLists.txt -e *cmake)
+if [ "${CMAKE_FILES}" != "" ]
 then
-	bFormatted="true"
+	${CMAKE_FORMAT} -i ${CMAKE_FILES}
+	nChanged=$(expr ${nChanged} = $?)
+	echo("${nChanged} files changed")
 fi
 
 # ---- clang-format ----
@@ -31,19 +32,18 @@ then
 	exit 1
 fi
 CXX_FILES_FILTER="\.([chi](pp|xx)|(cc|hh|ii)|[CHI])$"
-CXX_CHANGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -Ee "${CXX_FILES_FILTER}")
-if [ "${CXX_CHANGED_FILES}" != "" ]
+CXX_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -Ee "${CXX_FILES_FILTER}")
+if [ "${CXX_FILES}" != "" ]
 then
-	$CLANG_FORMAT -i -style=file ${CXX_CHANGED_FILES}
-	bFormatted="true"
+	$CLANG_FORMAT -i -style=file ${CXX_FILES}
+	nChanged=$(expr ${nChanged} = $?)
+	echo("${nChanged} files changed")
 fi
 
 # bool flag
-if [ ${bFormatted} = "true" ]
+if [ ${nChanged} != 0 ]
 then
-	echo "some file formatted"
+	echo "some file formatted. check files"
 	exit 1
 fi
-
-echo "why here? ${bFormatted}"
 

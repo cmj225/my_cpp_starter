@@ -3,7 +3,7 @@
 #
 
 # ---- debug build flag ----
-set(CLANG_DEBUG_FLAGS
+				set(CLANG_DEBUG_FLAGS
 	-O0
 	-g3
 	-ggdb
