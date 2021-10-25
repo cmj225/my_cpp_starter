@@ -39,7 +39,7 @@ then
 fi
 
 # bool flag
-if [ "${bFormatted}" = "true"]
+if [ "${bFormatted}" = "true" ]
 then
 	exit 1
 fi
