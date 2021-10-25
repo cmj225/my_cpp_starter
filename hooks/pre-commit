@@ -41,8 +41,7 @@ fi
 # bool flag
 if [ "${bFormatted}" = "true" ]
 then
+	echo "some file formatted"
 	exit 1
 fi
-
-done || exit $?
 
