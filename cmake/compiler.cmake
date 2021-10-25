@@ -3,7 +3,7 @@
 #
 
 # ---- display compiler info ----
-message(STATUS "Compiler Setting")
+					message(STATUS "Compiler Setting")
 message(STATUS "	ID	    \t: ${CMAKE_CXX_COMPILER_ID}")
 message(STATUS "	VERSION	\t: ${CMAKE_CXX_COMPILER_VERSION}")
 message(STATUS "	Path	  \t: ${CMAKE_CXX_COMPILER}")

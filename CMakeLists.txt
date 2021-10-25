@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.15)
 
 # ---- Project ----
-				project(
+					project(
   Greeter
-  VERSION 0.1.0
+  			VERSION 0.1.0
   LANGUAGES CXX)
 configure_file(${PROJECT_SOURCE_DIR}/cmake/Version.h.in ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}/Version.h)
 message(STATUS "Started CMake for ${PROJECT_NAME} v${PROJECT_VERSION}...\n")

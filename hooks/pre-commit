@@ -6,9 +6,6 @@
 RED="\e[0;31m"
 END="\e[0m"
 
-# boolean flag
-nChanged=0
-
 # ---- cmake-format ----
 CMAKE_FORMAT=`which cmake-format`
 if [ "${CMAKE_FORMAT}" = "" ]
@@ -20,7 +17,6 @@ CMAKE_FILES=$(git diff --cached --name-only | grep -e CMakeLists.txt -e *cmake)
 if [ "${CMAKE_FILES}" != "" ]
 then
 	${CMAKE_FORMAT} -i ${CMAKE_FILES}
-	echo -n "$? files changed\n"
 fi
 
 # ---- clang-format ----
@@ -35,14 +31,5 @@ CXX_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -Ee "${CXX_FI
 if [ "${CXX_FILES}" != "" ]
 then
 	$CLANG_FORMAT -i -style=file ${CXX_FILES}
-	nChanged=$(expr ${nChanged} = $?)
-	echo -n "${nChanged} files changed\n"
-fi
-
-# bool flag
-if [ ${nChanged} != 0 ]
-then
-	echo "some file formatted. check files"
-	exit 1
 fi
 
