@@ -45,5 +45,5 @@ then
 	exit 1
 fi
 
-echo "why here?"
+echo "why here? ${bFormatted}"
 
