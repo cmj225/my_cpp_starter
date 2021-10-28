@@ -42,6 +42,9 @@ option(${PROJECT_NAME}_ENABLE_GTEST "Use the GoogleTest for creating unit tests.
 option(${PROJECT_NAME}_ENABLE_GMOCK "Use the GoogleMock for extending the unit tests." ON)
 option(${PROJECT_NAME}_ENABLE_CATCH2 "Use the Catch2 for creating unit tests." ON)
 
+# Code Coverage
+option(${PROJECT_NAME}_ENABLE_CODECOV "Enable Code Coverage guess." OFF)
+
 # Package Manager
 option(${PROJECT_NAME}_ENABLE_PKG_MANAGER "Enable C++ Package Manager." OFF)
 option(${PROJECT_NAME}_ENABLE_CONAN "Use the Conan for package manager." OFF)

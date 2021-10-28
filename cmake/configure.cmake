@@ -39,6 +39,11 @@ if(${PROJECT_NAME}_ENABLE_UNIT_TEST)
   include(cmake/unit-test.cmake)
 endif()
 
+if(${PROJECT_NAME}_ENABLE_CODECOV)
+  add_compile_options(--coverage)
+  add_link_options(--coverage)
+endif()
+
 if(${PROJECT_NAME}_ENABLE_PKG_MANAGER)
   include(cmake/pkg-manager.cmake)
 endif()
