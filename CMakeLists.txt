@@ -30,9 +30,9 @@ option(${PROJECT_NAME}_ENABLE_GIT_SUBMODULES "Enable submodules init & update au
 option(${PROJECT_NAME}_ENABLE_CLANG_FORMAT "Enable clang-format for check convention" ON)
 
 # Statical Analyzers @TODO: module setup and testing need ...
-option(${PROJECT_NAME}_ENABLE_STATIC_ANALYZER "Enable Static Analysis." OFF)
-option(${PROJECT_NAME}_ENABLE_CLANG_TIDY "Enable Static Analysis with Clang-Tidy." OFF)
-option(${PROJECT_NAME}_ENABLE_CPPCHECK "Enable Static Analysis with Cppcheck." OFF)
+option(${PROJECT_NAME}_ENABLE_STATIC_ANALYZER "Enable Static Analysis." ON)
+option(${PROJECT_NAME}_ENABLE_CLANG_TIDY "Enable Static Analysis with Clang-Tidy." ON)
+option(${PROJECT_NAME}_ENABLE_CPPCHECK "Enable Static Analysis with Cppcheck." ON)
 
 # Documentation
 option(${PROJECT_NAME}_ENABLE_DOXYGEN "Enable Doxygen documentation." ON)

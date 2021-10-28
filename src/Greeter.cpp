@@ -2,18 +2,18 @@
 
 using namespace greeter;
 
-Greeter::Greeter(std::string _name) : name(std::move(_name)) {}
+Greeter::Greeter(std::string name) : _name(std::move(name)) {}
 
 std::string Greeter::greet(LanguageCode lang) const {
   switch (lang) {
     default:
     case LanguageCode::EN:
-      return "Hello " + name;
+      return "Hello " + _name;
     case LanguageCode::ED:
-      return "Hallo	" + name;
+      return "Hallo	" + _name;
     case LanguageCode::ES:
-      return "iHola " + name;
+      return "iHola " + _name;
     case LanguageCode::FR:
-      return "Bonjour " + name;
+      return "Bonjour " + _name;
   }
 }

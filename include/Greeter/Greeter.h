@@ -10,14 +10,14 @@ namespace greeter {
    * @brief A class for saying hello in multiple languages
    */
   class Greeter {
-    std::string name;
+    std::string _name;
 
   public:
     /**
      * @brief Creates a new greeter
      * @param name the name to greet
      */
-    Greeter(std::string name);
+    explicit Greeter(std::string name);
 
     /**
      * @brief Creates a localized string containing the greeting
