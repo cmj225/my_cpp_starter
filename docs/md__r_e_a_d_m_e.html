@@ -70,25 +70,56 @@ $(function() {
 Build</h1>
 <p >cmake -S . -B build cmake &ndash;build build cmake &ndash;build build &ndash;target install</p>
 <h1><a class="anchor" id="autotoc_md2"></a>
-clang-format custom target</h1>
+cmake-format</h1>
+<p >dependencies: pip, cmakelang, pyyaml install pip pip install cmakelang pip install pyyaml</p>
+<p >find . ( -name '*.cmake' -o -name 'CMakeLists.txt' ) -exec cmake-format -i {} \;</p>
 <p >cmake &ndash;build build &ndash;target clang-format</p>
 <h1><a class="anchor" id="autotoc_md3"></a>
 git hooks</h1>
 <ul>
 <li>add hook to ${PROJECT_SOURCE_DIR}/hooks}</li>
-<li>some hooks pre-installed.<ul>
-<li>pre-commit: clang-format foramtting</li>
+<li>pre-installed hooks<ul>
+<li>pre-commit: clang-format foramtting, cmake-format</li>
 </ul>
 </li>
 </ul>
 <h1><a class="anchor" id="autotoc_md4"></a>
+statical-analyzer</h1>
+<h2><a class="anchor" id="autotoc_md5"></a>
+clang-tidy</h2>
+<p >dependencies: macos -&gt; llvm (설치 후 llvm bin path export) </p>
+<h2><a class="anchor" id="autotoc_md6"></a>
+cppcheck</h2>
+<p >dependencies: cppcheck</p>
+<h1><a class="anchor" id="autotoc_md7"></a>
 doxygen</h1>
 <ul>
 <li>dependencies<ul>
 <li>doxygen, graphviz</li>
 </ul>
 </li>
-<li>cmake &ndash;build build &ndash;target doxygen </li>
+<li>cmake &ndash;build build &ndash;target doxygen</li>
+<li>mv html docs</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md8"></a>
+Unit-test</h1>
+<h2><a class="anchor" id="autotoc_md9"></a>
+cmake –build build –target ctest</h2>
+<h2><a class="anchor" id="autotoc_md10"></a>
+Google Test</h2>
+<ul>
+<li>dependencies<ul>
+<li>googletest </li>
+</ul>
+</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md11"></a>
+Catch2</h2>
+<ul>
+<li>dependencies<ul>
+<li>catch2 </li>
+</ul>
+</li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
