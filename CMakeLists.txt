@@ -44,9 +44,11 @@ option(${PROJECT_NAME}_ENABLE_GMOCK "Use the GoogleMock for extending the unit t
 option(${PROJECT_NAME}_ENABLE_CATCH2 "Use the Catch2 for creating unit tests." ON)
 
 include(cmake/configure.cmake)
+
 # ---- Find project dependencies ----
 # Identify and link with the specific "packages" the project uses find_package(package_name package_version REQUIRED
 # package_type [other_options])
+include(cmake/dependencies.cmake)
 
 # ---- Create library ----
 # Add source files Note: globbing sources is considered bad practice as CMake's generators may not detect new files
