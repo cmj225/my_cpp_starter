@@ -34,7 +34,13 @@ dependencies: cppcheck
 - mv html docs
 
 # Unit-test
-## Google Test
+## cmake --build build --target ctest
 
+## Google Test
+- dependencies
+	- googletest
 ## Catch2
+- dependencies
+	- catch2
+
 

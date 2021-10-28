@@ -38,45 +38,37 @@ option(${PROJECT_NAME}_ENABLE_CPPCHECK "Enable Static Analysis with Cppcheck." O
 option(${PROJECT_NAME}_ENABLE_DOXYGEN "Enable Doxygen documentation." ON)
 
 # Unit Testing @TODO: module setup and testing need ...
-option(${PROJECT_NAME}_ENABLE_UNIT_TEST "Enable Unit Tests for the project (from the `test` subforler)." OFF)
-option(${PROJECT_NAME}_USE_GTEST "Use the GoogleTest for creating unit tests." OFF)
-option(${PROJECT_NAME}_USE_GOOGLE_MOCK "Use the GoogleMock for extending the unit tests." OFF)
-option(${PROJECT_NAME}_USE_CATCH2 "Use the Catch2 for creating unit tests." OFF)
+option(${PROJECT_NAME}_ENABLE_UNIT_TEST "Enable Unit Tests for the project (from the `test` subforler)." ON)
+option(${PROJECT_NAME}_ENABLE_GTEST "Use the GoogleTest for creating unit tests." ON)
+option(${PROJECT_NAME}_ENABLE_GMOCK "Use the GoogleMock for extending the unit tests." ON)
+option(${PROJECT_NAME}_ENABLE_CATCH2 "Use the Catch2 for creating unit tests." ON)
 
 include(cmake/configure.cmake)
-
 # ---- Find project dependencies ----
 # Identify and link with the specific "packages" the project uses find_package(package_name package_version REQUIRED
 # package_type [other_options])
 
 # ---- Create library ----
-# configure project
-
 # Add source files Note: globbing sources is considered bad practice as CMake's generators may not detect new files
 # automatically. Keep that in mind when changing files, or explicitly mention them here.
-file(
-  GLOB_RECURSE
-  headers
-  CONFIGURE_DEPENDS
-  "${CMAKE_CURRENT_LIST_DIR}/include/*.h")
+set(PROJECT_HEADER_DIR ${PROJECT_SOURCE_DIR}/include)
 file(
   GLOB_RECURSE
   sources
   CONFIGURE_DEPENDS
-  "${CMAKE_CURRENT_LIST_DIR}/src/*.cpp")
-
-add_library(${PROJECT_NAME} SHARED ${headers} ${sources})
+  "${PROJECT_SOURCE_DIR}/src/*.cpp")
+add_library(${PROJECT_NAME} SHARED ${sources})
 target_compile_options(${PROJECT_NAME} PRIVATE ${${PROJECT_NAME}_COMPILE_OPTIONS})
 set_target_properties(
   ${PROJECT_NAME}
-  PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib"
-             LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/lib"
-             RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin"
-             OUTPUT_NAME ${PROJECT_NAME}-${PROJECT_VERSION})
+  PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+             LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+             RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+             OUTPUT_NAME ${PROJECT_NAME}.${PROJECT_VERSION})
 target_include_directories(
   ${PROJECT_NAME}
-  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include
-  PRIVATE ${CMAKE_CURRENT_LIST_DIR}/src)
+  PUBLIC ${PROJECT_HEADER_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}/src)
 target_link_libraries(
   ${PROJECT_NAME}
   PUBLIC
@@ -86,26 +78,25 @@ install(
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(DIRECTORY ${PROJECT_HEADER_DIR}/${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+# ---- Unit Test ----
+if(${PROJECT_NAME}_ENABLE_UNIT_TEST)
+  enable_testing()
+  add_subdirectory(tests)
+endif()
 
 # ---- handling custom targets ----
-# clang-format custom target @NOTE: Set proper paths and files ... temporally project's all cxx files add
+# clang-format custom target @NOTE: adjust proper path
 if(${PROJECT_NAME}_ENABLE_CLANG_FORMAT)
   file(
     GLOB_RECURSE
     clang-format-cxx-files
     CONFIGURE_DEPENDS
-    "${CMAKE_CURRENT_LIST_DIR}/*.h"
-    "${CMAKE_CURRENT_LIST_DIR}/*.hpp"
-    "${CMAKE_CURRENT_LIST_DIR}/*.cc"
-    "${CMAKE_CURRENT_LIST_DIR}/*.cpp"
-    "${CMAKE_CURRENT_LIST_DIR}/*.tpp")
+    "${CMAKE_CURRENT_LIST_DIR}/include/*.h"
+    "${CMAKE_CURRENT_LIST_DIR}/src/*.cpp"
+    "${CMAKE_CURRENT_LIST_DIR}/test/*.h"
+    "${CMAKE_CURRENT_LIST_DIR}/test/*.cpp")
   set(CLANG_FORMAT_INPUT ${clang-format-cxx-files})
   add_clang_format_target()
-endif()
-
-if(${PROJECT_NAME}_ENABLE_UNIT_TESTING)
-  enable_testing()
-  message("Building Tests. :)")
-  add_subdirectory(tests)
 endif()
