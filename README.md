@@ -7,22 +7,34 @@ cmake --build build
 cmake --build build --target install
 
 # cmake-format
-install pip
-pip install cmakelang
-pip install pyyaml
+dependencies: pip, cmakelang, pyyaml
+	install pip
+	pip install cmakelang
+	pip install pyyaml
+
 find . \( -name '*.cmake' -o -name 'CMakeLists.txt' \) -exec cmake-format -i {} \;
 
-# clang-format custom target
 cmake --build build --target clang-format
 
 # git hooks
 - add hook to ${PROJECT_SOURCE_DIR}/hooks}
-- some hooks pre-installed.
-  - pre-commit: clang-format foramtting
+- pre-installed hooks
+  - pre-commit: clang-format foramtting, cmake-format
+
+# statical-analyzer
+## clang-tidy
+dependencies: macos -> llvm (설치 후 llvm bin path export)
+## cppcheck
+dependencies: cppcheck
 
 # doxygen
 - dependencies
 	- doxygen, graphviz
 - cmake --build build --target doxygen
 - mv html docs
+
+# Unit-test
+## Google Test
+
+## Catch2
 

@@ -21,13 +21,13 @@ option(${PROJECT_NAME}_VERBOSE_OUTPUT
 option(${PROJECT_NAME}_DEBUG_BUILD "Set Project build type Debug." ON) # for develop -> further default = OFF
 option(${PROJECT_NAME}_WARNINGS_AS_ERRORS "Treat compiler warnings as errors." ON)
 
+# Clang-format
+option(${PROJECT_NAME}_ENABLE_CLANG_FORMAT "Enable clang-format for check convention" ON)
+
 # git
 option(${PROJECT_NAME}_ENABLE_GIT_HOOKS "Enable git hooks ${PROJECT_SOURCE_DIR}/hooks" ON)
 # @NOTE: if this option Enabled, submodule updated when project generating ...
 option(${PROJECT_NAME}_ENABLE_GIT_SUBMODULES "Enable submodules init & update automatically" ON)
-
-# Clang-format
-option(${PROJECT_NAME}_ENABLE_CLANG_FORMAT "Enable clang-format for check convention" ON)
 
 # Statical Analyzers @TODO: module setup and testing need ...
 option(${PROJECT_NAME}_ENABLE_STATIC_ANALYZER "Enable Static Analysis." ON)
