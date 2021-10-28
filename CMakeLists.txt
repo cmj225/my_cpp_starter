@@ -5,7 +5,6 @@ project(
   Greeter
   VERSION 0.1.0
   LANGUAGES CXX)
-configure_file(${PROJECT_SOURCE_DIR}/cmake/Version.h.in ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}/Version.h)
 message(STATUS "Started CMake for ${PROJECT_NAME} v${PROJECT_VERSION}...\n")
 
 # ---- check default ----
@@ -43,6 +42,11 @@ option(${PROJECT_NAME}_ENABLE_GTEST "Use the GoogleTest for creating unit tests.
 option(${PROJECT_NAME}_ENABLE_GMOCK "Use the GoogleMock for extending the unit tests." ON)
 option(${PROJECT_NAME}_ENABLE_CATCH2 "Use the Catch2 for creating unit tests." ON)
 
+# Package Manager
+option(${PROJECT_NAME}_ENABLE_PKG_MANAGER "Enable C++ Package Manager." OFF)
+option(${PROJECT_NAME}_ENABLE_CONAN "Use the Conan for package manager." OFF)
+option(${PROJECT_NAME}_ENABLE_VCPKG "Use the Vcpkg for package manager." OFF)
+
 include(cmake/configure.cmake)
 
 # ---- Find project dependencies ----
@@ -51,6 +55,9 @@ include(cmake/configure.cmake)
 include(cmake/dependencies.cmake)
 
 # ---- Create library ----
+# Add version header
+configure_file(${PROJECT_SOURCE_DIR}/cmake/Version.h.in ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}/Version.h)
+
 # Add source files Note: globbing sources is considered bad practice as CMake's generators may not detect new files
 # automatically. Keep that in mind when changing files, or explicitly mention them here.
 set(PROJECT_HEADER_DIR ${PROJECT_SOURCE_DIR}/include)

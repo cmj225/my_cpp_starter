@@ -1,0 +1,11 @@
+[requires]
+
+[build_requires]
+
+[generators]
+cmake
+
+[options]
+
+[imports]
+
