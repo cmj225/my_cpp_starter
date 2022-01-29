@@ -3,7 +3,7 @@
 
 #include <CppStarter/Version.h> // created from CMake configure
 
-namespace cppstarter {
+namespace CppStarter {
   std::string version();
 }
 
