@@ -29,42 +29,48 @@ set(PROJECT_HEADER_DIR ${PROJECT_SOURCE_DIR}/include)
 set(THIRD_PARTY_HEADER_DIR ${PROJECT_SOURCE_DIR}/ThirdParty/include)
 
 # create libary
-set(LIBRARY_TARGET ${PROJECT_NAME})
+#set(LIBRARY_TARGET ${PROJECT_NAME})
 #add_subdirectory(lib)   # <- library
-###
-file(GLOB_RECURSE LIBRARY_SOURCES
-    CONFIGURE_DEPENDS
+
+# create app
+#set(APP_TARGET ${PROJECT_NAME}App)
+#add_subdirectory(app)   # <- app
+
+# create unit-test
+
+#####
+file(
+        GLOB_RECURSE LIBRARY_SOURCES
+        CONFIGURE_DEPENDS
         "${CMAKE_CURRENT_LIST_DIR}/lib/*.cpp"
 )
-add_library(${LIBRARY_TARGET} SHARED ${LIBRARY_SOURCES})
-target_compile_options(${LIBRARY_TARGET} PRIVATE ${COMPILE_OPTIONS})
-target_include_directories(${LIBRARY_TARGET}
+message(STATUS "Library Sources: ${LIBRARY_SOURCES}")
+add_library(${PROJECT_NAME} SHARED ${LIBRARY_SOURCES})
+target_compile_options(${PROJECT_NAME} PRIVATE ${COMPILE_OPTIONS})
+set_target_properties(${PROJECT_NAME}
+    PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    OUTPUT_NAME ${PROJECT_NAME}.${PROJECT_VERSION}
+)
+target_include_directories(${PROJECT_NAME}
     PUBLIC ${PROJECT_HEADER_DIR} # <- use library header
     PRIVATE ${THIRD_PARTY_HEADER_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/lib/include # <- library internal header
 )
 
-# create app
-set(APP_TARGET ${PROJECT_NAME}App)
-#add_subdirectory(app)   # <- app
-file(GLOB_RECURSE APP_SOURCES
-    CONFIGURE_DEPENDS
-    "${CMAKE_CURRENT_LIST_DIR}/app/*.cpp"
+# add app internal header, source for library
+file(
+        GLOB_RECURSE APP_SOURCES
+        CONFIGURE_DEPENDS
+        "${CMAKE_CURRENT_LIST_DIR}/app/*.cpp"
 )
-add_executable(${APP_TARGET} ${APP_SOURCES})
-add_dependencies(${APP_TARGET} ${LIBRARY_TARGET})
-target_compile_options(${APP_TARGET} PRIVATE ${COMPILE_OPTIONS})
-target_include_directories(${APP_TARGET}
+message(STATUS "App Sources: ${APP_SOURCES}")
+add_executable(CppStarterApp ${APP_SOURCES})
+add_dependencies(CppStarterApp ${PROJECT_NAME})
+
+target_include_directories(CppStarterApp
     PUBLIC ${PROJECT_HEADER_DIR} # <- use library, app header
     PRIVATE ${THIRD_PARTY_HEADER_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/app/include # <- app internal header
 )
-target_link_libraries(${APP_TARGET} PRIVATE ${LIBRARY_TARGET})
-install(
-        TARGETS ${APP_TARGET}
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
-
-# create unit-test
-
-
+target_link_libraries(CppStarterApp PRIVATE ${PROJECT_NAME})

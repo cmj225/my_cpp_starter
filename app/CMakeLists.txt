@@ -10,8 +10,6 @@ file(
     "${CMAKE_CURRENT_LIST_DIR}/*.cpp"
 )
 message(STATUS "App Sources: ${APP_SOURCES}")
-message(STATUS "${APP_TARGET}")
-message(STATUS "${LIBRARY_TARGET}")
 add_executable(${APP_TARGET} ${APP_SOURCES})
 add_dependencies(${APP_TARGET} ${LIBRARY_TARGET})
 
@@ -29,7 +27,7 @@ include(${PROJECT_SOURCE_DIR}/cmake/dependencies/app-deps.cmake)
 message(STATUS "App Dependency check - Success")
 
 # link dependencies
-target_link_libraries(${APP_TARGET} PRIVATE ${LIBRARY_TARGET}
+target_link_libraries(${APP_TARGET} PRIVATE ${PROJECT_NAME}
     # add app deps libraries
 )
 

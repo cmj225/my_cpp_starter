@@ -2,13 +2,12 @@
 #include <CppStarter/CppStarter.h>
 #include <CppStarterInternal.h>
 
-namespace CppStarter {
-  std::string version() {
-    std::string version_str = CPPSTARTER_VERSION;
-    return version_str;
-  }
+std::string CppStarter::version() {
+  std::string version_str = CPPSTARTER_VERSION;
+  CppStarter::InternalSayHello();
+  return version_str;
+}
 
-  std::string InternalSayHello() {
-    return "hello";
-  }
+void CppStarter::InternalSayHello() {
+  std::cout << "hello" << std::endl;
 }
