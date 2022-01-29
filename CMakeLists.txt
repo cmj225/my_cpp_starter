@@ -7,14 +7,13 @@ cmake_minimum_required(VERSION 3.21)
 set(PROJECT_NAME CppStarter) # <- change project name
 string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWERCASE)
 string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPERCASE)
-set(PROJECT_NAMESPACE ${PROJECT_NAME_LOWERCASE})
 
 # ---- start project generating ----
 project(${PROJECT_NAME} VERSION 0.1.0 LANGUAGES CXX)
 message(STATUS "Start CMake ... Generate ${PROJECT_NAME} v${PROJECT_VERSION}")
 ## create project version header
 configure_file(${CMAKE_CURRENT_LIST_DIR}/Version.h.in
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME_LOWERCASE}/Version.h
+    ${CMAKE_CURRENT_LIST_DIR}/include/${PROJECT_NAME}/Version.h
 )
 ## set target cxx standard
 set(TARGET_CXX_STANDARD 20) # <- change to wanted standard version [14, 17, 20, Latest)

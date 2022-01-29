@@ -2,9 +2,9 @@
 #include <CppStarter/CppStarter.h>
 #include <CppStarterInternal.h>
 
-namespace cppstarter {
+namespace CppStarter {
   std::string version() {
-    std::string version_str = cppstarter::CPPSTARTER_VERSION;
+    std::string version_str = CPPSTARTER_VERSION;
     return version_str;
   }
 

@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace @PROJECT_NAMESPACE@ {
+namespace @PROJECT_NAME@ {
 
 /**
  * @file project information header

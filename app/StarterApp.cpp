@@ -3,7 +3,7 @@
 
 int main() {
   std::cout << "Hello, World!" << std::endl;
-  std::cout << cppstarter::CPPSTARTER_VERSION << std::endl;
-  std::cout << cppstarter::version() << std::endl;
+  std::cout << CppStarter::CPPSTARTER_VERSION << std::endl;
+  std::cout << CppStarter::version() << std::endl;
   return 0;
 }
