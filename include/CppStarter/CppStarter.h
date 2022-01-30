@@ -1,10 +1,13 @@
-#ifndef __CPPSTARTER__CPPSTARTER_H__
-#define __CPPSTARTER__CPPSTARTER_H__
+#ifndef CPPSTARTER_CPPSTARTER_H
+#define CPPSTARTER_CPPSTARTER_H
 
-#include <CppStarter/Version.h> // created from CMake configure
+#include <string>
+#include <CppStarter/version.h>
 
 namespace CppStarter {
-  std::string version();
+
+std::string GetVersion();
+
 }
 
-#endif /* __CPPSTARTER__CPPSTARTER_H__ */
+#endif // CPPSTARTER_CPPSTARTER_H

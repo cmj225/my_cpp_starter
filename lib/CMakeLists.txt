@@ -1,53 +1,20 @@
-#
-# ---- lib ----
-#
-message(STATUS "Library target generating start")
-
-# add libray internal header, source for library
+# 현재 디렉토리에 있는 모든 파일을 SRC_FILES 변수에 추가한다.
 file(
-    GLOB_RECURSE LIBRARY_SOURCES
-    CONFIGURE_DEPENDS
-    "${CMAKE_CURRENT_LIST_DIR}/*.cpp"
-)
-message(STATUS "Library Sources: ${LIBRARY_SOURCES}")
-add_library(${LIBRARY_TARGET} SHARED ${LIBRARY_SOURCES})
+  GLOB_RECURSE
+  SRC_FILES
+  CONFIGURE_DEPENDS
+  ${CMAKE_CURRENT_LIST_DIR}/*.cc)
 
-target_compile_options(${LIBRARY_TARGET} PRIVATE ${COMPILE_OPTIONS})
-set_target_properties(${LIBRARY_TARGET}
-    PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    OUTPUT_NAME ${PROJECT_NAME}.${PROJECT_VERSION}
-)
+add_library(${PROJECT_NAME} STATIC ${SRC_FILES})
 
-target_include_directories(${LIBRARY_TARGET}
-    PUBLIC ${PROJECT_HEADER_DIR} # <- use library header
-    PRIVATE ${THIRD_PARTY_HEADER_DIR}
-            ${CMAKE_CURRENT_LIST_DIR}/include # <- library internal header
-)
+# 라이브러리 파일은 빌드 디렉토리 안에 lib 폴더에 출력
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/lib)
 
-# check library dependencies
-message(STATUS "Library Dependency check")
-include(${PROJECT_SOURCE_DIR}/cmake/dependencies/library-deps.cmake)
-message(STATUS "Library Dependency check - Success")
+# include path 지정
+target_include_directories(
+  ${PROJECT_NAME}
+  PUBLIC ${PROJECT_SOURCE_DIR}/include
+  PRIVATE ${CMAKE_SOURCE_DIR}/libdeps/include)
 
-# link dependencies
-target_link_libraries(${LIBRARY_TARGET}
-    # add libary deps libraries
-)
-
-# library install
-install(
-    TARGETS ${LIBRARY_TARGET}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-)
-
-# library header install
-install(
-    DIRECTORY ${PROJECT_HEADER_DIR}/${LIBRARY_TARGET}
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
-
-message(STATUS "Library target generating start - Success")
-
-
+target_link_libraries(${PROJECT_NAME} PRIVATE project_options project_warnings)

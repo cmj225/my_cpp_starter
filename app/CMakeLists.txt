@@ -1,42 +1,16 @@
-#
-# ---- app ----
-#
-message(STATUS "App target generating start")
-
-# add app internal header, source for library
+# 현재 디렉토리에 있는 모든 파일을 SRC_FILES 변수에 추가한다.
 file(
-    GLOB_RECURSE APP_SOURCES
-    CONFIGURE_DEPENDS
-    "${CMAKE_CURRENT_LIST_DIR}/*.cpp"
-)
-message(STATUS "App Sources: ${APP_SOURCES}")
-add_executable(${APP_TARGET} ${APP_SOURCES})
-add_dependencies(${APP_TARGET} ${LIBRARY_TARGET})
+  GLOB_RECURSE
+  SRC_FILES
+  CONFIGURE_DEPENDS
+  ${CMAKE_CURRENT_LIST_DIR}/*.cc)
 
-target_compile_options(${APP_TARGET} PRIVATE ${COMPILE_OPTIONS})
+add_executable(program ${SRC_FILES})
 
-target_include_directories(${APP_TARGET}
-    PUBLIC ${PROJECT_HEADER_DIR} # <- use library, app header
-    PRIVATE ${THIRD_PARTY_HEADER_DIR}
-            ${CMAKE_CURRENT_LIST_DIR}/include # <- app internal header
-)
+target_include_directories(program PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(program PUBLIC ${PROJECT_NAME})
 
-# check app dependencies
-message(STATUS "App Dependency check")
-include(${PROJECT_SOURCE_DIR}/cmake/dependencies/app-deps.cmake)
-message(STATUS "App Dependency check - Success")
+# 실행 파일은 빌드 디렉토리 안에 bin 폴더에 출력
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-# link dependencies
-target_link_libraries(${APP_TARGET} PRIVATE ${PROJECT_NAME}
-    # add app deps libraries
-)
-
-# app install
-install(
-    TARGETS ${APP_TARGET}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
-
-
-
-message(STATUS "App target generating start - Success")
+add_dependencies(program ${PROJECT_NAME})

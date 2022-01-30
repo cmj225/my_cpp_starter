@@ -42,3 +42,6 @@ html
 
 #idea clion
 .idea
+
+#DS_STORE
+.DS_STORE
