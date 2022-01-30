@@ -1,0 +1,42 @@
+# https://taskfile.dev/#/installation
+version: 3
+
+# env - dotenv, global, local
+dotenv: ['.env']
+
+# tasks
+tasks:
+  all:
+    cmds:
+      - task: build
+      - task: docs
+
+  cmake-format:
+    - cmake-format --in-place
+      ./CMakeLists.txt
+      ./cmake/*.cmake
+      ./lib/CMakeLists.txt
+      ./app/CMakeLists.txt
+      ./tests/CMakeLists.txt
+
+  clang-format:
+    - clang-format -i ./lib/*.cc ./app/*.cc --style=file
+
+  build:
+    - cmake -S. -Bbuild -DCMAKE_BUILD_TYPE:STRING=Debug #-G "Ninja Multi-Config"
+    - cmake --build build
+
+  install:
+    - cd ./build && make install # ninja install
+
+  docs:
+    - cmake --build build --target doxygen-docs
+    - cp -r ./build/html ./docs
+
+  clean:
+    - rm -rf build docs
+
+  test:
+    - cmake --build build --target unit-test
+    - cd ./build && ctest -C Debug --verbose
+
