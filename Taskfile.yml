@@ -33,10 +33,11 @@ tasks:
     - cmake --build build --target doxygen-docs
     - cp -r ./build/html ./docs
 
+  tests:
+    - cmake --build build --target ctest
+
   clean:
     - rm -rf build docs
 
-  test:
-    - cmake --build build --target unit-test
-    - cd ./build && ctest -C Debug --verbose
+
 

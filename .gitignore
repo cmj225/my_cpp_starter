@@ -42,6 +42,7 @@ html
 
 #idea clion
 .idea
+cmake-build-*
 
 #DS_STORE
 .DS_STORE
