@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.21)
 project(
   starter
-  VERSION 0.1.0
+  VERSION 0.0.0
   DESCRIPTION "${PROJECT_NAME} Project"
   LANGUAGES CXX)
 string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWERCASE)
