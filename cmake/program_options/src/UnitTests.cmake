@@ -18,9 +18,8 @@ if(${ProjectOptions_ENABLE_UNIT_TEST_GTEST})
       "${CMAKE_CURRENT_LIST_DIR}/${target_name}/*.cc")
     add_executable(${target_name} ${test_sources})
     add_dependencies(${target_name} ${PROJECT_NAME})
-    target_include_directories(${target_name}
-      PRIVATE ${PROJECT_SOURCE_DIR}/include
-        ${CMAKE_CURRENT_LIST_DIR}/${target_name})
+    target_include_directories(${target_name} PRIVATE ${PROJECT_SOURCE_DIR}/include
+                                                      ${CMAKE_CURRENT_LIST_DIR}/${target_name})
     target_link_libraries(${target_name} PRIVATE ${PROJECT_NAME} ${GOOGLE_TEST_LIBRARIES})
     add_test(${test_group_name} ${target_name})
   endfunction()
@@ -39,7 +38,8 @@ if(ProjectOptions_ENABLE_UNIT_TEST_CATCH2)
       "${CMAKE_CURRENT_LIST_DIR}/${target_name}/*.cc")
     add_executable(${target_name} ${test_sources})
     add_dependencies(${target_name} ${PROJECT_NAME})
-    target_include_directories(${target_name} PRIVATE ${PROJECT_SOURCE_DIR}/include ${CMAKE_CURRENT_LIST_DIR}/${target_name})
+    target_include_directories(${target_name} PRIVATE ${PROJECT_SOURCE_DIR}/include
+                                                      ${CMAKE_CURRENT_LIST_DIR}/${target_name})
     target_link_libraries(${target_name} PRIVATE ${PROJECT_NAME} ${CATCH2_TEST_LIBRARIES})
     add_test(${test_group_name} ${target_name})
   endfunction()

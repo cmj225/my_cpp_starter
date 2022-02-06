@@ -5,12 +5,21 @@ file(
   CONFIGURE_DEPENDS
   ${CMAKE_CURRENT_LIST_DIR}/*.cc)
 
-add_executable(program ${SRC_FILES})
+# target 추가
+set(APP_NAME "${PROJECT_NAME}_app") # starter_app
+add_executable(${APP_NAME} ${SRC_FILES})
 
-target_include_directories(program PUBLIC ${CMAKE_SOURCE_DIR}/include)
-target_link_libraries(program PUBLIC ${PROJECT_NAME})
+# include path 지정
+target_include_directories(${APP_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/include)
+
+# dependency 설정
+add_dependencies(${APP_NAME} ${PROJECT_NAME}) # depends on starter
+set(${APP_NAME}_DEPENDENCIES ${PROJECT_NAME})
+message(STATUS "${APP_NAME} dependencies -> ${${APP_NAME}_DEPENDENCIES}")
+target_link_libraries(${APP_NAME} PUBLIC project_options project_warnings ${${APP_NAME}_DEPENDENCIES})
 
 # 실행 파일은 빌드 디렉토리 안에 bin 폴더에 출력
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_dependencies(program ${PROJECT_NAME})
+# app install
+install(TARGETS ${APP_NAME})

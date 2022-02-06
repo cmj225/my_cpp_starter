@@ -8,36 +8,45 @@ dotenv: ['.env']
 tasks:
   all:
     cmds:
+      - task: format
       - task: build
+      - task: tests
       - task: docs
 
-  cmake-format:
+  format:
     - cmake-format --in-place
-      ./CMakeLists.txt
-      ./cmake/*.cmake
+      ./cmake/program_options/*.cmake
+      ./cmake/program_options/src/*.cmake
+      ./cmake/dependency_options/*.cmake
       ./lib/CMakeLists.txt
       ./app/CMakeLists.txt
       ./tests/CMakeLists.txt
-
-  clang-format:
     - clang-format -i ./lib/*.cc ./app/*.cc --style=file
 
   build:
-    - cmake -S. -Bbuild -DCMAKE_BUILD_TYPE:STRING=Debug #-G "Ninja Multi-Config"
+    - cmake -S. -Bbuild -DCMAKE_BUILD_TYPE:STRING=Debug
     - cmake --build build
 
+  build-release:
+    - cmake -S. -Bbuild -DCMAKE_BUILD_TYPE:STRING=Release
+    - cmake --build build
+
+  run:
+    - cmake --build build
+    - ./build/app/starter_app
+
   install:
-    - cd ./build && make install # ninja install
+    - sudo cmake --build build --target install
+
+  tests:
+    - cmake --build build --target ctest
 
   docs:
     - cmake --build build --target doxygen-docs
     - cp -r ./build/html ./docs
 
-  tests:
-    - cmake --build build --target ctest
-
   clean:
-    - rm -rf build docs
+    - rm -rf build libdeps/src
 
 
 

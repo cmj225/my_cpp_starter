@@ -1,7 +1,6 @@
-### CppStater
+### my_cpp_starter
 
 #### Todo
 * git hooks
-    * add hook to ${PROJECT_SOURCE_DIR}/hooks}
 * git workflow
 

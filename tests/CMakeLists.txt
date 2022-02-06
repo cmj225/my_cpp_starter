@@ -17,3 +17,5 @@ add_catch2_target("catch2_group_1" "catch2_example")
 # Note
 # - Create test folder
 # - add test target
+#add_gtest_target("test_group" "test_dir")
+#add_catch2_target("test_group" "test_dir")

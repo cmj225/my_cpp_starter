@@ -4,8 +4,8 @@
 #
 function(enable_cache)
   set(CACHE_OPTION
-    "ccache"
-    CACHE STRING "Compiler cache to be used")
+      "ccache"
+      CACHE STRING "Compiler cache to be used")
   set(CACHE_OPTION_VALUES "ccache" "sccache")
   set_property(CACHE CACHE_OPTION PROPERTY STRINGS ${CACHE_OPTION_VALUES})
   list(
@@ -17,7 +17,7 @@ function(enable_cache)
   if(${CACHE_OPTION_INDEX} EQUAL -1)
     message(
       STATUS
-      "Using custom compiler cache system: '${CACHE_OPTION}', explicitly supported entries are ${CACHE_OPTION_VALUES}"
+        "Using custom compiler cache system: '${CACHE_OPTION}', explicitly supported entries are ${CACHE_OPTION_VALUES}"
     )
   endif()
 
@@ -26,8 +26,8 @@ function(enable_cache)
   if(CACHE_BINARY)
     message(STATUS "${CACHE_BINARY} found and enabled")
     set(CMAKE_CXX_COMPILER_LAUNCHER
-      ${CACHE_BINARY}
-      CACHE FILEPATH "compiler cache used")
+        ${CACHE_BINARY}
+        CACHE FILEPATH "compiler cache used")
   else()
     message(WARNING "${CACHE_OPTION} is enabled but was not found. Not using it")
   endif()

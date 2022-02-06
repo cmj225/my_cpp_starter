@@ -5,16 +5,29 @@ file(
   CONFIGURE_DEPENDS
   ${CMAKE_CURRENT_LIST_DIR}/*.cc)
 
-add_library(${PROJECT_NAME} STATIC ${SRC_FILES})
+# target 추가
+add_library(${PROJECT_NAME} SHARED ${SRC_FILES})
 
-# 라이브러리 파일은 빌드 디렉토리 안에 lib 폴더에 출력
+# include path 지정
+file(
+  GLOB_RECURSE
+  ${PROJECT_NAME}_PUBLIC_HEADERS
+  CONFIGURE_DEPENDS
+  ${PROJECT_SOURCE_DIR}/include/*.h)
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
+set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${${PROJECT_NAME}_PUBLIC_HEADERS}")
+
+# dependency 설정
+set(LIBRARY_DEPENDENCIES spdlog::spdlog)
+message(STATUS "${PROJECT_NAME} dependencies -> ${LIBRARY_DEPENDENCIES}")
+target_link_libraries(
+  ${PROJECT_NAME}
+  PRIVATE project_options project_warnings
+  PUBLIC ${LIBRARY_DEPENDENCIES})
+
+# 라이브러리 파일은 lib 폴더에 출력
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/lib)
 
-# include path 지정
-target_include_directories(
-  ${PROJECT_NAME}
-  PUBLIC ${PROJECT_SOURCE_DIR}/include
-  PRIVATE ${CMAKE_SOURCE_DIR}/libdeps/include)
-
-target_link_libraries(${PROJECT_NAME} PRIVATE project_options project_warnings)
+# library, public header install
+install(TARGETS ${PROJECT_NAME} PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME})

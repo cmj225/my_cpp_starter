@@ -5,11 +5,11 @@ macro(enable_cppcheck)
   find_program(CPPCHECK cppcheck)
   if(CPPCHECK)
     set(CMAKE_CXX_CPPCHECK
-      ${CPPCHECK}
-      --suppress=missingInclude
-      --enable=all
-      --inline-suppr
-      --inconclusive)
+        ${CPPCHECK}
+        --suppress=missingInclude
+        --enable=all
+        --inline-suppr
+        --inconclusive)
     if(${CMAKE_CXX_STANDARD})
       set(CMAKE_CXX_CPPCHECK ${CMAKE_CXX_CPPCHECK} --std=c++${CMAKE_CXX_STANDARD})
     endif()
